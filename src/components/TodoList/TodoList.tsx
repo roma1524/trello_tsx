@@ -4,9 +4,10 @@ import {TaskType} from "../../App";
 type TodoListPropsType = {
     tittle: string
     tasks: TaskType[]
+    removeTask: (arg: number) => void;
 }
 
-export function TodoList ( {tittle, tasks}:  TodoListPropsType)  {
+export function TodoList ( {tittle, tasks, removeTask}:  TodoListPropsType)  {
     return (
         <div>
             <h3>{tittle}</h3>
@@ -15,9 +16,13 @@ export function TodoList ( {tittle, tasks}:  TodoListPropsType)  {
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map((task: TaskType, index: number) => {
+                {tasks.map(task => {
                     return (
-                        <li key={task.id}><input type="checkbox" checked={task.isDone}/><span>{task.title}</span></li>
+                        <li key={task.id}>
+                            <input type="checkbox" checked={task.isDone}/>
+                            <span>{task.title}</span>
+                            <button onClick={() => removeTask(task.id)}>X</button>
+                        </li>
                     )
                 })}
             </ul>
