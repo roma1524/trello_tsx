@@ -42,11 +42,24 @@ export function App() {
         taskForTodoList = tasks.filter(t => t.isDone === true);
     }
 
+    function changeStatus(id: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === id);
+        if (task) {
+            task.isDone = isDone;
+        }
+        setTasks([...tasks])
+    }
 
     return (
         <div className="App">
-            <TodoList tittle={"List1"} addTask={addTask} tasks={taskForTodoList} removeTask={removeTask} changeFilterTask={changeFilterTask}/>
-            {/*<TodoList tittle={"List2"} tasks={tasks} removeTask={removeTask} changeFilterTask={changeFilterTask}/>*/}
+            <TodoList tittle={"List1"}
+                      addTask={addTask}
+                      tasks={taskForTodoList}
+                      removeTask={removeTask}
+                      changeFilterTask={changeFilterTask}
+                      changeStatus={changeStatus}
+                      filter={filter}/>
+
         </div>
     );
 }
