@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
 import {FilterValueType, TaskType} from "../../App";
 import '../../App.css'
+import {AddItemForm} from "../AddItemForm/AddItemForm";
 
 type TodoListPropsType = {
     id: string
@@ -26,24 +27,6 @@ export function TodoList({
                              removeTodolist
                          }: TodoListPropsType) {
 
-    const [inputValue, setInputValue] = useState("");
-    let [error, setError] = useState<string | null>(null);
-
-    function onChangeInputHandler(event: React.ChangeEvent<HTMLInputElement>) {
-        setError(null);
-        setInputValue(event.currentTarget.value);
-    }
-
-    function addTaskHandler() {
-        if (inputValue.trim() === "") {
-            setInputValue('')
-            setError('Field is required');
-            return;
-        }
-        addTask(inputValue.trim(), id)
-        setInputValue('')
-    }
-
     function onAllClickHandler() {
         changeFilterTask('All', id)
     }
@@ -60,19 +43,16 @@ export function TodoList({
         removeTodolist(id);
     }
 
+    function addTaskH(title: string) {
+        addTask(title, id)
+    }
+
     return (
         <div>
             <h3>{tittle}
                 <button onClick={rTodolist}>X</button>
             </h3>
-            <div>
-                <input type="text"
-                       value={inputValue}
-                       onChange={onChangeInputHandler}
-                       className={error ? 'error' : ''}/>
-                <button onClick={addTaskHandler}>+</button>
-                {error && <div className="error-message">{error}</div>}
-            </div>
+            <AddItemForm addItem={addTaskH} />
             <ul>
                 {tasks.map(task => {
                     return (
@@ -98,3 +78,4 @@ export function TodoList({
         </div>
     )
 }
+
