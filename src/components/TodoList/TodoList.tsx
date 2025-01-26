@@ -3,6 +3,11 @@ import {FilterValueType, TaskType} from "../../App";
 import '../../App.css'
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
+import IconButton from '@mui/material/IconButton';
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {Button} from "@mui/material";
+import s from "./TodoList.module.css";
 
 type TodoListPropsType = {
     id: string
@@ -59,11 +64,14 @@ export function TodoList({
 
     return (
         <div>
-            <h3><EditableSpan title={title} onChange={changeTodoListTitle}/>
-                <button onClick={rTodolist}>X</button>
+            <h3 className={s.title}>
+                <EditableSpan title={title} onChange={changeTodoListTitle}/>
+                <IconButton onClick={rTodolist} aria-label="delete" size="small">
+                    <DeleteIcon fontSize="inherit" />
+                </IconButton>
             </h3>
-            <AddItemForm addItem={addTaskH}/>
-            <ul>
+            <AddItemForm addItem={addTaskH} title={'Item name'}/>
+            <ul className={s.lists}>
                 {tasks.map(task => {
                     function onChangeStatusHandler(e: ChangeEvent<HTMLInputElement>) {
                         let newIsDoneValue = e.currentTarget.checked
@@ -74,26 +82,28 @@ export function TodoList({
                         changeTitle(task.id, newTitle, id)
                     }
 
+                    const listItemStyle = s.listItem + ' ' + (task.isDone ? s.isDone : '')
+
                     return (
                         <li key={task.id}
-                            className={task.isDone ? 'is-done' : ''}>
+                            className={listItemStyle}>
                             <input type="checkbox"
                                    checked={task.isDone}
                                    onChange={onChangeStatusHandler}/>
 
                             <EditableSpan title={task.title} onChange={onChangeTitleHandler}/>
-                            <button onClick={() => removeTask(task.id, id)}>X</button>
+                            <IconButton onClick={() => removeTask(task.id, id)}><BackspaceIcon color={'error'}/></IconButton>
                         </li>
                     )
                 })}
             </ul>
             <div>
-                <button className={filter === 'All' ? 'active-filter' : ''} onClick={onAllClickHandler}>All</button>
-                <button className={filter === 'Active' ? 'active-filter' : ''} onClick={onActiveClickHandler}>Active
-                </button>
-                <button className={filter === 'Completed' ? 'active-filter' : ''}
+                <Button variant={filter === 'All' ? 'contained' : 'text'} onClick={onAllClickHandler}>All</Button>
+                <Button color={'primary'} variant={filter === 'Active' ? 'contained' : 'text'} onClick={onActiveClickHandler}>Active
+                </Button>
+                <Button color={'secondary'} variant={filter === 'Completed' ? 'contained' : 'text'}
                         onClick={onCompletedClickHandler}>Completed
-                </button>
+                </Button>
             </div>
         </div>
     )
