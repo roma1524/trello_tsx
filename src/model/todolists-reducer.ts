@@ -9,29 +9,26 @@ const initialState :TodoListType[] = [
     {id: todoListId2, title: 'What to buy', filter: 'All'}
 ];
 
-export type RemoveTodolist = {
+export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST'
     payload: {
         id: string
     }
 }
-
-export type AddTodoList = {
+export type AddTodoListActionType = {
     type: 'ADD-TODOLIST'
     payload: {
         title: string
     }
 }
-
-export type ChangeTitle = {
+export type ChangeTitleActionType = {
     type: 'CHANGE_TITLE'
     payload: {
         id: string
         title: string
     }
 }
-
-export type ChangeFilter = {
+export type ChangeFilterActionType = {
     type: 'CHANGE_FILTER'
     payload: {
         id: string
@@ -39,13 +36,22 @@ export type ChangeFilter = {
     }
 }
 
-export const ChangeTitleAC = (id: string, title: string): ChangeTitle => {
+export const RemoveTodolistAC = (id: string): RemoveTodolistActionType => {
+    return {
+        type: 'REMOVE-TODOLIST', payload: {id} as const
+    }
+}
+export const AddTodoListAC = (title: string): AddTodoListActionType => {
+    return {
+        type: 'ADD-TODOLIST', payload: {title} as const
+    }
+}
+export const ChangeTitleAC = (id: string, title: string): ChangeTitleActionType => {
     return {
         type: 'CHANGE_TITLE', payload: {id, title} as const
     }
 }
-
-export const changeTodolistFilterAC = (id: string, filter: FilterValueType): ChangeFilter => {
+export const ChangeTodolistFilterAC = (id: string, filter: FilterValueType): ChangeFilterActionType => {
     return {type: 'CHANGE_FILTER', payload: {id, filter}} as const
 }
 
@@ -64,4 +70,4 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValueType): Cha
         }
     }
 
-type ActionsType = RemoveTodolist | AddTodoList | ChangeTitle | ChangeFilter
+type ActionsType = RemoveTodolistActionType | AddTodoListActionType | ChangeTitleActionType | ChangeFilterActionType
