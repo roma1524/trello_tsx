@@ -83,19 +83,19 @@ export function App() {
         }
     }
 
-    function removeTodolist(todoListId: string) {
-        let filterForTodolists = todoLists.filter(item => item.id !== todoListId);
-        setTodoLists([...filterForTodolists]);
-        delete tasksObj[todoListId];
-        setTasksObj({...tasksObj});
-    }
+    // function removeTodolist(todoListId: string) {
+    //     let filterForTodolists = todoLists.filter(item => item.id !== todoListId);
+    //     setTodoLists([...filterForTodolists]);
+    //     delete tasksObj[todoListId];
+    //     setTasksObj({...tasksObj});
+    // }
 
-    function addTodoList(title: string) {
-        const newTodoList: TodoListType = {id: v1(), title: title, filter: 'All'};
-        setTodoLists([newTodoList, ...todoLists]);
-
-        setTasksObj({...tasksObj, [newTodoList.id]: []});
-    }
+    // function addTodoList(title: string) {
+    //     const newTodoList: TodoListType = {id: v1(), title: title, filter: 'All'};
+    //     setTodoLists([newTodoList, ...todoLists]);
+    //
+    //     setTasksObj({...tasksObj, [newTodoList.id]: []});
+    // }
 
     function OnChangeTitle(id: string, newTitle: string, todoListId: string) {
         let tasks = tasksObj[todoListId];
