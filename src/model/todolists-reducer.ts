@@ -18,6 +18,7 @@ export type RemoveTodolistActionType = {
 export type AddTodoListActionType = {
     type: 'ADD-TODOLIST'
     payload: {
+        tdId: string
         title: string
     }
 }
@@ -41,9 +42,9 @@ export const RemoveTodolistAC = (id: string): RemoveTodolistActionType => {
         type: 'REMOVE-TODOLIST', payload: {id} as const
     }
 }
-export const AddTodoListAC = (title: string): AddTodoListActionType => {
+export const AddTodoListAC = (title: string, tdId: string): AddTodoListActionType => {
     return {
-        type: 'ADD-TODOLIST', payload: {title} as const
+        type: 'ADD-TODOLIST', payload: {title, tdId} as const
     }
 }
 export const ChangeTitleAC = (id: string, title: string): ChangeTitleActionType => {
@@ -60,7 +61,7 @@ export const ChangeTodolistFilterAC = (id: string, filter: FilterValueType): Cha
             case 'REMOVE-TODOLIST':
                 return state.filter(el => el.id !== action.payload.id);
             case 'ADD-TODOLIST':
-                return [...state, {id: v1(), title: action.payload.title, filter: 'All'}]
+                return [...state, {id: action.payload.tdId, title: action.payload.title, filter: 'All'}]
             case 'CHANGE_TITLE':
                 return state.map(el => el.id === action.payload.id ? {...el, title: action.payload.title} : el)
             case 'CHANGE_FILTER':

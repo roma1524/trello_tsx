@@ -79,7 +79,9 @@ export function App() {
     }
 
     function addTodoList(title: string) {
-        dispatchTodoLists(AddTodoListAC(title))
+        const tdId = v1()
+        dispatchTasksObj(AddTaskAC(tdId, title = '112223333'))
+        dispatchTodoLists(AddTodoListAC(tdId, title))
     }
 
     function OnChangeTitle(id: string, newTitle: string, todoListId: string) {
@@ -130,7 +132,7 @@ export function App() {
                             if (tdL.filter === 'Completed') {
                                 taskForTodoList = taskForTodoList.filter(t => t.isDone === true);
                             }
-
+                            console.log(taskForTodoList)
                             return <Grid item>
                                 <Paper style={{padding: '20px', minHeight: '250px'}}>
                                     <TodoList
