@@ -1,6 +1,5 @@
 import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC, tasksReducer} from "./tasks-reducer";
 import {TasksObjPropsType} from "../app/App";
-import {v1} from "uuid";
 //
 //
 // test('correct task should be deleted', () => {
@@ -111,3 +110,90 @@ import {v1} from "uuid";
 //     expect(endState[todoListId1][2].title).toBe(newTitle)
 //     expect(endState[todoListId2].length).toBe(3)
 // })
+
+
+
+import { RemoveTodolistAC } from './todolists-reducer';
+import { nanoid } from '@reduxjs/toolkit';
+
+describe('tasksReducer', () => {
+    it('should handle RemoveTodolistAC', () => {
+        const todolistId = nanoid();
+        const state = {
+            [todolistId]: [
+                { id: '1', title: 'Task 1', isDone: false },
+                { id: '2', title: 'Task 2', isDone: true }
+            ]
+        };
+
+        const action = RemoveTodolistAC({ id: todolistId });
+        const newState = tasksReducer(state, action);
+
+        expect(newState[todolistId]).toBeUndefined();
+    });
+
+    it('should handle RemoveTaskAC', () => {
+        const todolistId = nanoid();
+        const taskId = '1';
+        const state = {
+            [todolistId]: [
+                { id: taskId, title: 'Task 1', isDone: false },
+                { id: '2', title: 'Task 2', isDone: true }
+            ]
+        };
+
+        const action = RemoveTaskAC({ todolistId, taskId });
+        const newState = tasksReducer(state, action);
+
+        expect(newState[todolistId].length).toBe(1);
+        expect(newState[todolistId].find(task => task.id === taskId)).toBeUndefined();
+    });
+
+    it('should handle AddTaskAC', () => {
+        const todolistId = nanoid();
+        const title = 'New Task';
+        const state = {
+            [todolistId]: []
+        };
+
+        const action = AddTaskAC({ todolistId, title });
+        const newState = tasksReducer(state, action);
+
+        expect(newState[todolistId].length).toBe(1);
+        expect(newState[todolistId][0].title).toBe(title);
+        expect(newState[todolistId][0].isDone).toBe(false);
+    });
+
+    it('should handle ChangeTaskStatusAC', () => {
+        const todolistId = nanoid();
+        const taskId = '1';
+        const state = {
+            [todolistId]: [
+                { id: taskId, title: 'Task 1', isDone: false },
+                { id: '2', title: 'Task 2', isDone: true }
+            ]
+        };
+
+        const action = ChangeTaskStatusAC({ todolistId, taskId, isDone: true });
+        const newState = tasksReducer(state, action);
+
+        expect(newState[todolistId].find(task => task.id === taskId).isDone).toBe(true);
+    });
+
+    it('should handle ChangeTaskTitleAC', () => {
+        const todolistId = nanoid();
+        const taskId = '1';
+        const newTitle = 'Updated Task Title';
+        const state = {
+            [todolistId]: [
+                { id: taskId, title: 'Task 1', isDone: false },
+                { id: '2', title: 'Task 2', isDone: true }
+            ]
+        };
+
+        const action = ChangeTaskTitleAC({ todolistId, taskId, title: newTitle });
+        const newState = tasksReducer(state, action);
+
+        expect(newState[todolistId].find(task => task.id === taskId).title).toBe(newTitle);
+    });
+});

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css'
 import {TodoList} from "../components/TodoList/TodoList";
-import {v1} from "uuid";
 import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import {AppBar, Box, Button, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,7 +15,6 @@ import {
     AddTaskAC,
     ChangeTaskStatusAC,
     ChangeTaskTitleAC,
-    CreateTodolistAC,
     RemoveTaskAC,
 } from "../model/tasks-reducer";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
@@ -49,15 +47,15 @@ export function App() {
     function removeTask(id: string, todolistId: string) {
         dispatch(RemoveTaskAC({todolistId, taskId: id}))
     }
-    function OnChangeTitle(id: string, newTitle: string, todoListId: string) {
-        // dispatch(ChangeTaskTitleAC(todoListId, id, newTitle))
+    function OnChangeTitle(id: string, title: string, todolistId: string) {
+        dispatch(ChangeTaskTitleAC({todolistId, taskId: id, title}))
     }
 
     function addTask(title: string, todolistId: string) {
         dispatch(AddTaskAC({todolistId, title}))
     }
-    function changeStatus(id: string, isDone: boolean, todoListId: string) {
-        // dispatch(ChangeTaskStatusAC(todoListId, id, isDone))
+    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+        dispatch(ChangeTaskStatusAC({todolistId, taskId: id, isDone}))
     }
 
     function changeFilterTask(filter: FilterValueType, todoListId: string) {
@@ -67,8 +65,7 @@ export function App() {
         dispatch(RemoveTodolistAC({id: todoListId}))
     }
     function addTodoList(title: string) {
-        // dispatch(AddTodoListAC(title, id))
-        // dispatch(CreateTodolistAC(id))
+        dispatch(AddTodoListAC(title))
     }
     function changeTodoTitle(id: string, newTitle: string) {
         dispatch(ChangeTitleAC({id, title: newTitle}))

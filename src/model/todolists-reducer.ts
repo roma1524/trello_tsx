@@ -3,7 +3,7 @@ import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 
 // const todolistId1 = nanoid()
 // const todolistId2 = nanoid()
-//
+
 // const initialState: TodoListType[] = [
 //     {id: todolistId1, title: 'What to learn', filter: 'All'},
 //     {id: todolistId2, title: 'What to buy', filter: 'All'},
@@ -12,8 +12,8 @@ import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 const initialState: TodoListType[] = []
 
 export const RemoveTodolistAC = createAction<{ id: string }>('todolist/RemoveTodolist')
-export const AddTodoListAC = createAction('todolist/AddTodoList', (tdId: string, title: string ) => {
-    return {payload: {id: tdId, title}}
+export const AddTodoListAC = createAction('todolists/createTodolist', (title: string) => {
+    return  {payload: { title, id: nanoid() }}
 })
 export const ChangeTitleAC = createAction<{id: string, title: string}>('todolist/ChangeTitle')
 export const ChangeTodolistFilterAC = createAction<{id: string, filter: FilterValueType}>('todolist/ChangeTodolistFilter')
