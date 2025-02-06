@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
-import {FilterValueType, TaskType} from "../../App";
-import '../../App.css'
+import {FilterValueType, TaskType} from "../../app/App";
+import '../../app/App.css'
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -40,23 +40,18 @@ export function TodoList({
     function onAllClickHandler() {
         changeFilterTask('All', id)
     }
-
     function onActiveClickHandler() {
         changeFilterTask('Active', id)
     }
-
     function onCompletedClickHandler() {
         changeFilterTask('Completed', id)
     }
-
     function rTodolist() {
         removeTodolist(id);
     }
-
     function addTaskH(title: string) {
         addTask(title, id)
     }
-
     function changeTodoListTitle(newTitle: string) {
         changeTodoTitle(id, newTitle)
     }
@@ -78,10 +73,8 @@ export function TodoList({
                         changeStatus(task.id, newIsDoneValue, id)
                     }
                     function onChangeTitleHandler(newTitle: string) {
-
                         changeTitle(task.id, newTitle, id)
                     }
-
                     const listItemStyle = s.listItem + ' ' + (task.isDone ? s.isDone : '')
 
                     return (
